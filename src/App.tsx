@@ -1,5 +1,10 @@
+import Navbar from "./Components/Layouts/Navbar/Nav";
+
 export default function App() {
   return (
-    <div>App</div>
+    <div>
+      <Navbar />
+      <div>App</div>
+    </div>
   )
 }
