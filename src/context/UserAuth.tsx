@@ -1,27 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-// import { useAuthModal } from "../context/AuthModal";
 import { useNavigate } from "react-router-dom";
-
-interface IUser {
-    _id: string;
-    name: string;
-    role: string;
-    exp: number;
-}
-
-type AuthContextType = {
-    user: IUser | null;
-    setUser: (user: IUser) => void;
-    logout: () => void;
-};
+import type { AuthContextType, IUser } from "../types/User";
 
 const UserAuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function UserAuthProvider({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<IUser | null>(null);
     const navigate = useNavigate();
-    // const { setAuthModal } = useAuthModal();
 
     useEffect(() => {
         const token = localStorage.getItem("accessToken");

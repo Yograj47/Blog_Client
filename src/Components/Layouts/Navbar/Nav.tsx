@@ -3,10 +3,12 @@ import { Button } from "@mui/material";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useUser } from "../../../context/UserAuth";
 
 export default function Navbar() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const { setAuthModal } = useAuthModal();
+    const { user, logout } = useUser();
 
     useEffect(() => {
         if (!mobileOpen) return;
@@ -17,7 +19,7 @@ export default function Navbar() {
         };
     }, [mobileOpen]);
 
-    const handleOpenAuth = (type: "login" | "signup") => {
+    const handleOpenAuth = (type: "signin" | "signup") => {
         setAuthModal(type);
         setMobileOpen(false);
     };
@@ -47,7 +49,7 @@ export default function Navbar() {
                     Services
                 </NavLink>
 
-
+                {user ? <Button onClick={() => logout()}>Logout</Button> : <p className="hidden"></p>}
                 <Button
                     variant="outlined"
                     onClick={() => handleOpenAuth("signup")}
@@ -57,7 +59,7 @@ export default function Navbar() {
                 </Button>
                 <Button
                     variant="contained"
-                    onClick={() => handleOpenAuth("login")}
+                    onClick={() => handleOpenAuth("signin")}
                     sx={{
                         borderRadius: "20px",
                         textTransform: "none",
@@ -116,7 +118,7 @@ export default function Navbar() {
                     <Button
                         variant="contained"
                         fullWidth
-                        onClick={() => handleOpenAuth("login")}
+                        onClick={() => handleOpenAuth("signin")}
                         sx={{
                             borderRadius: "10px",
                             fontWeight: 600,

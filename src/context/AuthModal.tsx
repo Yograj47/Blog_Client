@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 
-type AuthModalType = "login" | "signup" | null
+type AuthModalType = "signin" | "signup" | null
 
 interface AuthModalContextType {
     authModal: AuthModalType;

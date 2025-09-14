@@ -9,11 +9,11 @@ import { UserAuthProvider } from './context/UserAuth.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <UserAuthProvider>
-        <AuthModalProvider>
+      <AuthModalProvider>
+        <UserAuthProvider>
           <App />
-        </AuthModalProvider>
-      </UserAuthProvider>
+        </UserAuthProvider>
+      </AuthModalProvider>
     </BrowserRouter>
   </StrictMode>
 )

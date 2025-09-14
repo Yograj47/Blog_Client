@@ -46,6 +46,7 @@ export default function SignUp() {
             if (response.data.accessToken) {
                 localStorage.setItem("accessToken", response.data.accessToken);
                 setUser(jwtDecode(response.data.accessToken));
+                setAuthModal(null)
             }
         } catch (error: unknown) {
             setErrorMessage("Failed to register. Please try again.");
@@ -193,7 +194,7 @@ export default function SignUp() {
                         Already have an account?
                         <Button
                             variant="text"
-                            onClick={() => setAuthModal?.("login")}
+                            onClick={() => setAuthModal?.("signin")}
                             sx={{
                                 ml: 1,
                                 color: "#60a5fa",

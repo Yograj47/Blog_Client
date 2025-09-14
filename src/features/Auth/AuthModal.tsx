@@ -1,5 +1,5 @@
 import { useAuthModal } from "../../context/AuthModal";
-import SignIn from "./Sigin";
+import SignIn from "./SigIn";
 import SignUp from "./SignUp";
 import { X } from "lucide-react";
 
@@ -26,7 +26,7 @@ export default function AuthModal() {
                 className="w-full max-w-md animate-scaleIn"
                 onClick={(e) => e.stopPropagation()}
             >
-                {authModal === "login" && <SignIn />}
+                {authModal === "signin" && <SignIn />}
                 {authModal === "signup" && <SignUp />}
             </div>
         </div>

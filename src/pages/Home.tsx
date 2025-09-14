@@ -4,14 +4,15 @@ function Home() {
     const { user } = useUser()
     return (
         <>
-            {user ?
-                (
-                    <div>
-                        Welcome {user.name}
-                    </div >
-                ) :
-                (
-                    <div>Home</div>)
+            {
+                user ?
+                    (
+                        <div>
+                            Welcome {user.name}
+                        </div >
+                    ) :
+                    (
+                        <div>Home</div>)
             }
         </>
     )

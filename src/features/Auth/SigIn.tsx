@@ -43,6 +43,7 @@ export default function SignIn() {
             if (response.data.accessToken) {
                 localStorage.setItem("accessToken", response.data.accessToken);
                 setUser(jwtDecode(response.data.accessToken));
+                setAuthModal(null)
             }
         } catch (error: unknown) {
             if (axios.isAxiosError(error)) {
