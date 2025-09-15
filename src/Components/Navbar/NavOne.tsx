@@ -1,11 +1,11 @@
-import { useAuthModal } from "../../../context/AuthModal";
+import { useAuthModal } from "@/Utils/context/AuthModal";
 import { Button } from "@mui/material";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useUser } from "../../../context/UserAuth";
+import { useUser } from "@/Utils/context/UserAuth";
 
-export default function Navbar() {
+export default function NavOne() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const { setAuthModal } = useAuthModal();
     const { user, logout } = useUser();

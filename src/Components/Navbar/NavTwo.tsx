@@ -1,11 +1,12 @@
+import { useUser } from '@/Utils/context/UserAuth';
 import { Button } from '@mui/material'
 import { Bell, Menu, PenBox, User } from 'lucide-react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom';
-import type { IUser } from '../../../types/User';
 
-export default function AuthNav({ user, logout }: { user?: IUser, logout: any }) {
+export default function NavTwo() {
     const [isProfileOpen, setProfileOpen] = useState<boolean>(false);
+    const { user, logout } = useUser();
     return (
         <header className="w-full bg-white shadow-sm px-4 py-2 flex items-center justify-between relative">
             {/* Left Section: menu + logo + search */}
@@ -33,7 +34,7 @@ export default function AuthNav({ user, logout }: { user?: IUser, logout: any })
             {/* Right Section: nav items */}
             <nav className="flex items-center gap-4">
                 <Link
-                    to="/blog/write"
+                    to="/b/write"
                     className="flex items-center gap-1 px-3 py-1.5 text-gray-700 hover:bg-gray-100 rounded-lg transition"
                 >
                     <PenBox className="w-5 h-5" />

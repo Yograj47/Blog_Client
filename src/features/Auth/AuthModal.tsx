@@ -1,4 +1,4 @@
-import { useAuthModal } from "../../context/AuthModal";
+import { useAuthModal } from "@/Utils/context/AuthModal";
 import SignIn from "./SigIn";
 import SignUp from "./SignUp";
 import { X } from "lucide-react";

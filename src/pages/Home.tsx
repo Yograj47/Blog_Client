@@ -1,4 +1,6 @@
-import { useUser } from "../context/UserAuth"
+import AuthHome from "@/Components/Home/AuthHome"
+import GuestHome from "@/Components/Home/GuestHome"
+import { useUser } from "@/Utils/context/UserAuth"
 
 function Home() {
     const { user } = useUser()
@@ -7,12 +9,11 @@ function Home() {
             {
                 user ?
                     (
-                        <div>
-                            Welcome {user.name}
-                        </div >
+                        <AuthHome user={user} />
                     ) :
                     (
-                        <div>Home</div>)
+                        <GuestHome />
+                    )
             }
         </>
     )

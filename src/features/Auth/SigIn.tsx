@@ -13,10 +13,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import axios from "axios";
-import { useAuthModal } from "../../context/AuthModal";
-import { LoginSchema, type Credentials } from "../../types/Auth";
+import { useAuthModal } from "@/Utils/context/AuthModal";
+import { LoginSchema, type Credentials } from "../../Utils/types/Auth";
 import { jwtDecode } from "jwt-decode";
-import { useUser } from "../../context/UserAuth";
+import { useUser } from "@/Utils/context/UserAuth";
 
 export default function SignIn() {
     const [showPassword, setShowPassword] = useState(false);

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import type { AuthContextType, IUser } from "../types/User";
+import type { AuthContextType, IUser } from "@/Utils/types/User";
 
 const UserAuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -15,6 +15,7 @@ export function UserAuthProvider({ children }: { children: React.ReactNode }) {
             try {
                 const decoded = jwtDecode<IUser>(token);
                 setUser(decoded);
+                navigate("/")
             } catch (err) {
                 console.error("Invalid token", err);
                 localStorage.removeItem("accessToken");

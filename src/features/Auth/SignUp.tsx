@@ -13,9 +13,9 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
-import { useAuthModal } from "../../context/AuthModal";
-import { type IRegister, RegisterSchema } from "../../types/Auth";
-import { useUser } from "../../context/UserAuth";
+import { useAuthModal } from "@/Utils/context/AuthModal";
+import { type IRegister, RegisterSchema } from "../../Utils/types/Auth";
+import { useUser } from "@/Utils/context/UserAuth";
 import { jwtDecode } from "jwt-decode";
 
 export default function SignUp() {
