@@ -7,10 +7,8 @@ import NotFound from "./pages/NotFound";
 import { useUser } from "./Utils/context/UserAuth";
 
 // Layouts
-import PublicLayout from "./Components/Layouts/PublicLayout";
-import ViewerLayout from "./Components/Layouts/ViewerLayout";
-import OtherLayout from "./Components/Layouts/OtherLayout";
 import WriteBlog from "./pages/WriteBlog";
+import PublicLayout from "./Components/Layout/PublicLayout";
 
 export default function App() {
   const { user } = useUser();
@@ -30,13 +28,10 @@ export default function App() {
         {/* Viewer pages (for logged-in users) */}
         {user && (
           <>
-            <Route element={<ViewerLayout />}>
               <Route path="/" element={<Home />} />
               {/* Add other logged-in pages here */}
-            </Route>
-            <Route element={<OtherLayout />}>
+            
               <Route path="/b/write" element={<WriteBlog />} />
-            </Route>
           </>
         )}
 

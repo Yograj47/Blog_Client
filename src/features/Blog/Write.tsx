@@ -1,5 +1,3 @@
-'use client'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
     Box,
@@ -21,7 +19,7 @@ import { X } from 'lucide-react'
 import axios from 'axios'
 import { BlogFormData, blogSchema } from '@/Utils/types/Blog'
 import { deleteImageFromCloudinary, uploadImageToCloudinary } from '@/Utils/Methods/HandleImage'
-import TipTapEditor from '@/Components/Blog/textEditor'
+import TipTapEditor from '@/Components/Editor/textEditor'
 import UploadingScreen from '@/Utils/UI/UploadingScreen'
 
 const categories = ['Food', 'Travel', 'Tech', 'Lifestyle', 'News']
@@ -155,7 +153,7 @@ export const BlogForm = ({ id }: IEdit) => {
                         <Box display="flex" justifyContent="space-between" alignItems="center" mb={4} flexDirection={{ xs: 'column', sm: 'row' }} gap={2}>
                             <Typography variant="h5" fontWeight="bold">{id ? 'Edit Post' : 'Create Post'}</Typography>
                             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} width={{ xs: '100%', sm: 'auto' }}>
-                                <Button variant="outlined" fullWidth>Save Draft</Button>
+                                <Button variant="outlined" fullWidth>Draft</Button>
                                 <Button variant="contained" color="primary" type="submit" fullWidth>Publish</Button>
                             </Stack>
                         </Box>
