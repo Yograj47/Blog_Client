@@ -1,22 +1,24 @@
-import { Search, LogIn } from "lucide-react";
+import { Search, LogIn, ArrowLeft } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function ViewerNav() {
     return (
-        <header className="w-full h-16 bg-white/80 backdrop-blur-md border-b border-gray-100 px-6 flex items-center justify-between sticky top-0 z-50">
-            <div className="text-xl font-bold text-gray-800">BlogPedia</div>
-            
-            <div className="flex-1 max-w-md mx-8 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input 
-                    type="text" 
-                    placeholder="Search blogs..." 
-                    className="w-full bg-gray-100 border-none rounded-lg py-1.5 pl-10 pr-4 text-sm outline-none focus:ring-1 focus:ring-gray-200"
-                />
+        <header className="w-full h-16 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 flex items-center justify-between sticky top-0 z-50">
+            <div className="flex items-center gap-4">
+                <Link to="/" className="p-2 hover:bg-slate-50 rounded-full transition text-slate-500">
+                    <ArrowLeft className="w-5 h-5" />
+                </Link>
+                <div className="text-sm font-semibold text-slate-400 tracking-widest uppercase">Reading Mode</div>
             </div>
 
-            <button className="flex items-center gap-2 text-indigo-600 font-semibold text-sm">
-                <LogIn className="w-4 h-4" /> Sign In
-            </button>
+            <div className="flex items-center gap-6">
+                <button className="text-slate-400 hover:text-slate-600 transition">
+                    <Search className="w-5 h-5" />
+                </button>
+                <Link to="/login" className="flex items-center gap-2 text-blue-600 font-bold text-sm">
+                    <LogIn className="w-4 h-4" /> Sign In
+                </Link>
+            </div>
         </header>
     );
 }

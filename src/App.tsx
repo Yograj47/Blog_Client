@@ -8,7 +8,7 @@ import { useUser } from "./Utils/context/UserAuth";
 
 // Layouts
 import WriteBlog from "./pages/WriteBlog";
-import PublicLayout from "./Components/Layout/PublicLayout";
+import PublicLayout from "./Components/Layout/MainLayout";
 
 export default function App() {
   const { user } = useUser();

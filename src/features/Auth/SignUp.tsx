@@ -1,18 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
-    Box,
-    Button,
-    TextField,
-    Divider,
-    InputAdornment,
-    IconButton,
-    Alert,
-    CircularProgress,
+    Box, TextField, Button, IconButton,
+    InputAdornment, CircularProgress, Alert,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import { Eye, EyeClosed } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import axios from "axios";
 import { useAuthModal } from "@/Utils/context/AuthModal";
 import { type IRegister, RegisterSchema } from "../../Utils/types/Auth";
 import { useUser } from "@/Utils/context/UserAuth";
@@ -23,13 +17,9 @@ export default function SignUp() {
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const { setAuthModal } = useAuthModal();
-    const { setUser } = useUser()
+    const { setUser } = useUser();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<IRegister>({
+    const { register, handleSubmit, formState: { errors } } = useForm<IRegister>({
         resolver: zodResolver(RegisterSchema),
         defaultValues: { name: "", email: "", sPassword: "", cPassword: "" },
     });
@@ -43,168 +33,119 @@ export default function SignUp() {
                 email: data.email,
                 password: data.sPassword,
             }, { withCredentials: true });
+
             if (response.data.accessToken) {
                 localStorage.setItem("accessToken", response.data.accessToken);
                 setUser(jwtDecode(response.data.accessToken));
-                setAuthModal(null)
+                setAuthModal(null);
             }
-        } catch (error: unknown) {
-            setErrorMessage("Failed to register. Please try again.");
-            console.error(error);
+        } catch (error: any) {
+            setErrorMessage(error.response?.data?.message || "Registration failed.");
         } finally {
             setLoading(false);
         }
     };
 
+    const inputStyles = {
+        "& .MuiOutlinedInput-root": {
+            color: "white",
+            backgroundColor: "#0f172a",
+            borderRadius: "12px",
+            "& fieldset": { borderColor: "#334155" },
+            "&:hover fieldset": { borderColor: "#475569" },
+            "&.Mui-focused fieldset": { borderColor: "#3b82f6" },
+        },
+        "& .MuiInputLabel-root": { color: "#94a3b8" },
+        "& .Mui-focused.MuiInputLabel-root": { color: "#3b82f6" },
+        "& .MuiFormHelperText-root": { color: "#f87171" }
+    };
+
     return (
-        <div className="w-full bg-[#111827] rounded-2xl shadow-2xl border border-gray-800 p-8 animate-scaleIn">
-            {/* Header */}
-            <div className="mb-8 text-center">
-                <h2 className="text-3xl font-semibold text-white">Create Account ✨</h2>
-                <p className="text-gray-400 mt-2">
-                    Join us to start writing, reading, and exploring blogs.
-                </p>
+        <div className="w-full p-8 md:p-10 bg-slate-900">
+            <div className="mb-8">
+                <h2 className="text-2xl font-bold text-white tracking-tight">Create Account</h2>
+                <p className="text-slate-400 text-sm mt-1 font-medium">Initialize your profile to begin.</p>
             </div>
 
-            {/* Error */}
             {errorMessage && (
-                <Alert severity="error" sx={{ mb: 3, borderRadius: "0.75rem" }}>
+                <Alert severity="error" className="mb-6 rounded-xl bg-red-500/10 text-red-400 border border-red-500/20">
                     {errorMessage}
                 </Alert>
             )}
 
-            {/* Form */}
             <form onSubmit={handleSubmit(onSubmit)}>
-                <Box display="flex" flexDirection="column" gap={3}>
-                    {/* Name */}
+                <Box className="flex flex-col gap-5">
                     <TextField
                         {...register("name")}
-                        label="Name"
+                        label="Full Name"
                         fullWidth
                         error={!!errors.name}
                         helperText={errors.name?.message}
-                        InputLabelProps={{ style: { color: "#9ca3af" } }}
-                        sx={{
-                            input: { color: "white" },
-                            "& .MuiOutlinedInput-root": {
-                                borderRadius: "0.75rem",
-                                "& fieldset": { borderColor: "#374151" },
-                                "&:hover fieldset": { borderColor: "#60a5fa" },
-                                "&.Mui-focused fieldset": { borderColor: "#3b82f6" },
-                            },
-                        }}
+                        sx={inputStyles}
                     />
 
-                    {/* Email */}
                     <TextField
                         {...register("email")}
-                        label="Email"
-                        type="email"
+                        label="Email Address"
                         fullWidth
                         error={!!errors.email}
                         helperText={errors.email?.message}
-                        InputLabelProps={{ style: { color: "#9ca3af" } }}
-                        sx={{
-                            input: { color: "white" },
-                            "& .MuiOutlinedInput-root": {
-                                borderRadius: "0.75rem",
-                                "& fieldset": { borderColor: "#374151" },
-                                "&:hover fieldset": { borderColor: "#60a5fa" },
-                                "&.Mui-focused fieldset": { borderColor: "#3b82f6" },
-                            },
-                        }}
+                        sx={inputStyles}
                     />
 
-                    {/* Password */}
-                    <TextField
-                        {...register("sPassword")}
-                        label="Create Password"
-                        type={showPassword ? "text" : "password"}
-                        fullWidth
-                        error={!!errors.sPassword}
-                        helperText={errors.sPassword?.message}
-                        InputLabelProps={{ style: { color: "#9ca3af" } }}
-                        sx={{
-                            input: { color: "white" },
-                            "& .MuiOutlinedInput-root": {
-                                borderRadius: "0.75rem",
-                                "& fieldset": { borderColor: "#374151" },
-                                "&:hover fieldset": { borderColor: "#60a5fa" },
-                                "&.Mui-focused fieldset": { borderColor: "#3b82f6" },
-                            },
-                        }}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end">
-                                        {showPassword ? <Eye className="text-gray-300" /> : <EyeClosed className="text-gray-300" />}
-                                    </IconButton>
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <TextField
+                            {...register("sPassword")}
+                            label="Password"
+                            type={showPassword ? "text" : "password"}
+                            error={!!errors.sPassword}
+                            helperText={errors.sPassword?.message}
+                            sx={inputStyles}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton onClick={() => setShowPassword(!showPassword)} sx={{ color: "#64748b" }}>
+                                            {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <TextField
+                            {...register("cPassword")}
+                            label="Confirm"
+                            type={showPassword ? "text" : "password"}
+                            error={!!errors.cPassword}
+                            helperText={errors.cPassword?.message}
+                            sx={inputStyles}
+                        />
+                    </div>
 
-                    {/* Confirm Password */}
-                    <TextField
-                        {...register("cPassword")}
-                        label="Confirm Password"
-                        type={showPassword ? "text" : "password"}
-                        fullWidth
-                        error={!!errors.cPassword}
-                        helperText={errors.cPassword?.message}
-                        InputLabelProps={{ style: { color: "#9ca3af" } }}
-                        sx={{
-                            input: { color: "white" },
-                            "& .MuiOutlinedInput-root": {
-                                borderRadius: "0.75rem",
-                                "& fieldset": { borderColor: "#374151" },
-                                "&:hover fieldset": { borderColor: "#60a5fa" },
-                                "&.Mui-focused fieldset": { borderColor: "#3b82f6" },
-                            },
-                        }}
-                    />
-
-                    {/* Submit Button */}
                     <Button
                         type="submit"
                         variant="contained"
-                        fullWidth
                         disabled={loading}
-                        sx={{
-                            background: "linear-gradient(90deg, #3b82f6 0%, #2563eb 100%)",
-                            paddingY: "0.9rem",
-                            fontSize: "1rem",
-                            borderRadius: "0.75rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.5px",
-                            boxShadow: "0 8px 20px rgba(37,99,235,0.35)",
-                            ":hover": {
-                                background: "linear-gradient(90deg, #2563eb 0%, #1d4ed8 100%)",
-                            },
-                        }}
+                        className="py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl normal-case shadow-lg shadow-blue-500/10 transition-all active:scale-[0.98] mt-2"
+                        fullWidth
                     >
-                        {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Register"}
+                        {loading ? <CircularProgress size={24} color="inherit" /> : "Register"}
                     </Button>
 
-                    {/* Divider */}
-                    <Divider sx={{ borderColor: "#374151", color: "#9ca3af", fontSize: "0.9rem" }}>or</Divider>
+                    <div className="flex items-center gap-4 my-2">
+                        <div className="h-[1px] flex-1 bg-slate-800"></div>
+                        <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em]">OR</span>
+                        <div className="h-[1px] flex-1 bg-slate-800"></div>
+                    </div>
 
-                    {/* Already have account */}
-                    <p className="text-sm text-center text-gray-400">
+                    <p className="text-sm text-center text-slate-400 font-medium">
                         Already have an account?
-                        <Button
-                            variant="text"
-                            onClick={() => setAuthModal?.("signin")}
-                            sx={{
-                                ml: 1,
-                                color: "#60a5fa",
-                                fontWeight: 600,
-                                textTransform: "none",
-                                ":hover": { color: "#3b82f6" },
-                            }}
+                        <button
+                            type="button"
+                            onClick={() => setAuthModal("signin")}
+                            className="ml-2 text-blue-400 font-bold hover:text-blue-300 transition-colors"
                         >
-                            Login
-                        </Button>
+                            Sign In
+                        </button>
                     </p>
                 </Box>
             </form>
